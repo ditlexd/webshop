@@ -14,7 +14,6 @@ type Props = {
 function HomePage({ products, pageNo }: Props): JSX.Element {
     const [items, setItems] = useState(products);
 
-    console.log('SEARCH');
     if (!products.length) {
         return <h1>There were no matches for your search</h1>;
     }
