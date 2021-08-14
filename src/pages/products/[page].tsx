@@ -14,17 +14,17 @@ type Props = {
 
 function HomePage({ products }: Props): JSX.Element {
     return (
-        <>
+        <div className="flex flex-col">
             <SearchBox />
             <div
                 id="products"
-                className="grid md:grid-cols-2 sm:grid-cols-1 justify-around gap-x-12 m-20"
+                className="grid md:grid-cols-2 sm:grid-cols-1 justify-around gap-x-12 mb-20 ml-20 mr-20"
             >
                 {products.map((item) => (
                     <ProductCard item={item} key={item.id} />
                 ))}
             </div>
-        </>
+        </div>
     );
 }
 
