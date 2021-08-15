@@ -5,12 +5,21 @@ import { Product } from '../../types';
 
 type Props = {
     products: Product[];
+    page: number;
     onAddToCartClick: (product: Product) => void;
 };
 
-function ProductPage({ products, onAddToCartClick }: Props): JSX.Element {
+function ProductPage({ products, onAddToCartClick, page }: Props): JSX.Element {
     return (
         <>
+            <div className="flex flex-row ml-20 mt-4 justify-between mr-20">
+                <div>
+                    {page > 1 && (
+                        <a href={`/products/${page - 1}`}> Previous </a>
+                    )}
+                </div>
+                <a href={`/products/${page + 1}`}> Next </a>
+            </div>
             <div
                 id="products"
                 className="grid md:grid-cols-2 sm:grid-cols-1 justify-around gap-x-12 mb-20 ml-20 mr-20"
@@ -46,6 +55,7 @@ export const getServerSideProps: GetServerSideProps = async (
             // @ts-ignore
             props: {
                 products,
+                page: parseInt(page as string, 10),
             },
         };
     } catch (err) {

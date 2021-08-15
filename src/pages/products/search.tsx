@@ -6,15 +6,24 @@ import ProductCard from '../../components/ProductCard';
 type Props = {
     products: Product[];
     onAddToCartClick: (product: Product) => void;
+    page: number;
 };
 
-function SearchPage({ products, onAddToCartClick }: Props): JSX.Element {
+function SearchPage({ products, onAddToCartClick, page }: Props): JSX.Element {
     if (!products.length) {
         return <h1>There were no matches for your search</h1>;
     }
 
     return (
         <>
+            <div className="flex flex-row ml-20 mt-4 justify-between mr-20">
+                <div>
+                    {page > 1 && (
+                        <a href={`/products/${page - 1}`}> Previous </a>
+                    )}
+                </div>
+                <a href={`/products/${page + 1}`}> Next </a>
+            </div>
             <div
                 id="products"
                 className="grid md:grid-cols-2 sm:grid-cols-1 justify-around gap-x-12 mb-20 ml-20 mr-20"
@@ -46,6 +55,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
         return {
             props: {
                 products,
+                page: parseInt(page as string, 10),
             },
         };
     } catch (err) {
