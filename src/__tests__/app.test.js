@@ -3,10 +3,18 @@
  */
 
 import { fireEvent, render, screen, waitFor } from '@testing-library/react';
+import MyApp from '../pages/_app';
 import HomePage from '../pages/products/[page]';
 
 test('Should display a button to open cart', () => {
-    render(<HomePage products={[]} cart={{ id: 1, products: [] }} />);
+    const pageProps = { products: [] };
+    render(
+        <MyApp
+            pageProps={pageProps}
+            Component={HomePage}
+            cart={{ id: 1, products: {} }}
+        />,
+    );
 
     expect(screen.getByText('Cart (0)')).toBeInTheDocument();
 });
@@ -18,19 +26,23 @@ test('Should add item to cart if "add to bag" is clicked', async () => {
         }),
     );
 
+    const pageProps = {
+        products: [
+            {
+                id: 1,
+                name: 'Product',
+                description: 'Description',
+                defaultImage: '',
+                images: [],
+                price: 1234,
+                discount: 0,
+            },
+        ],
+    };
     render(
-        <HomePage
-            products={[
-                {
-                    id: 1,
-                    name: 'Product',
-                    description: 'Description',
-                    defaultImage: '',
-                    images: [],
-                    price: 1234,
-                    discount: 0,
-                },
-            ]}
+        <MyApp
+            pageProps={pageProps}
+            Component={HomePage}
             cart={{ id: 1, products: {} }}
         />,
     );
@@ -49,19 +61,24 @@ test('Should display cart if cart modal is clicked', async () => {
         }),
     );
 
+    const pageProps = {
+        products: [
+            {
+                id: 1,
+                name: 'Product',
+                description: 'Description',
+                defaultImage: '',
+                images: [],
+                price: 1234,
+                discount: 0,
+            },
+        ],
+    };
+
     render(
-        <HomePage
-            products={[
-                {
-                    id: 1,
-                    name: 'Product',
-                    description: 'Description',
-                    defaultImage: '',
-                    images: [],
-                    price: 1234,
-                    discount: 0,
-                },
-            ]}
+        <MyApp
+            pageProps={pageProps}
+            Component={HomePage}
             cart={{
                 id: 1,
                 products: {
