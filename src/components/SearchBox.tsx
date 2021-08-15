@@ -8,7 +8,7 @@ const SearchBox = (): JSX.Element => {
     async function onSubmit() {
         await router.push({
             pathname: '/products/search',
-            query: { searchQuery, page: '1' },
+            query: { q: searchQuery, page: '1' },
         });
     }
 
