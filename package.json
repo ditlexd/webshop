@@ -7,7 +7,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "npm run server && next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "test": "jest"
   },
   "dependencies": {
     "faker": "^5.4.0",
@@ -17,20 +18,27 @@
     "react-dom": "^17.0.2"
   },
   "devDependencies": {
+    "@testing-library/dom": "^8.1.0",
+    "@testing-library/jest-dom": "^5.14.1",
+    "@testing-library/react": "^12.0.0",
+    "@types/react": "^17.0.16",
     "@typescript-eslint/eslint-plugin": "^4.29.1",
-    "jest": "^27.0.6",
+    "autoprefixer": "^10.3.1",
+    "babel-jest": "^27.0.6",
+    "eslint": "^7.32.0",
     "eslint-config-airbnb-base": "^14.2.1",
     "eslint-config-airbnb-typescript": "^12.3.1",
-    "@types/react": "^17.0.16",
-    "autoprefixer": "^10.3.1",
-    "eslint": "^7.32.0",
     "eslint-config-next": "^11.0.1",
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-jest": "^24.4.0",
     "eslint-plugin-prettier": "^3.4.0",
+    "identity-obj-proxy": "^3.0.0",
+    "jest": "^27.0.6",
+    "jest-dom": "^4.0.0",
     "postcss": "^8.3.6",
     "prettier": "^2.3.2",
     "tailwindcss": "^2.2.7",
+    "ts-jest": "^27.0.0-next.12",
     "typescript": "^4.3.5"
   }
 }
