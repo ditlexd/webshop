@@ -1,9 +1,5 @@
 import 'tailwindcss/tailwind.css';
-import {
-    GetStaticPathsResult,
-    GetStaticProps,
-    GetStaticPropsResult,
-} from 'next';
+import { GetServerSideProps, GetServerSidePropsResult } from 'next';
 import ProductCard from '../../components/ProductCard';
 import { Cart, Product } from '../../types';
 import SearchBox from '../../components/SearchBox';
@@ -37,48 +33,34 @@ function HomePage({ products, cart }: Props): JSX.Element {
     );
 }
 
-export const getStaticProps: GetStaticProps = async ({
-    params,
-}): Promise<GetStaticPropsResult<Props>> => {
-    const { page } = params as { page: string };
+export const getServerSideProps: GetServerSideProps = async (
+    context,
+): Promise<GetServerSidePropsResult<Props>> => {
+    try {
+        const { page } = context.query;
+        if (Number.isNaN(parseInt(page as string, 10))) {
+            return { notFound: true };
+        }
 
-    if (Number.isNaN(parseInt(page, 10))) {
+        const [productResponse, cartResponse] = await Promise.all([
+            fetch(`http://localhost:8080/products?_page=${page}&_limit=10`),
+            fetch(`http://localhost:8080/carts/${1}`),
+        ]);
+        const [products, cart] = await Promise.all([
+            productResponse.json(),
+            cartResponse.json(),
+        ]);
+
+        return {
+            props: {
+                products,
+                cart,
+            },
+        };
+    } catch (err) {
+        console.log(err);
         return { notFound: true };
     }
-
-    const response = await fetch(
-        `http://localhost:8080/products?_page=${page}&_limit=10`,
-    );
-    const products = await response.json();
-
-    if (!products.length) return { notFound: true };
-
-    return {
-        props: {
-            products,
-            cart: { id: 1, products: [] },
-        },
-        revalidate: 100,
-    };
 };
-
-export async function getStaticPaths(): Promise<GetStaticPathsResult> {
-    const response = await fetch(`http://localhost:8080/products`);
-    const products = await response.json();
-
-    const paths = [];
-    /*
-     * Build pages for all paths that display the product
-     * catalogue.
-     */
-    for (let i = 1; i < products.length / 10; i += 1) {
-        paths.push({ params: { page: i.toString() } });
-    }
-
-    return {
-        paths,
-        fallback: 'blocking',
-    };
-}
 
 export default HomePage;
