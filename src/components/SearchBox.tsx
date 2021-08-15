@@ -13,7 +13,7 @@ const SearchBox = () => {
     }
 
     return (
-        <div className="w-full ml-20 mt-10">
+        <div className="ml-20 mt-10">
             <form onSubmit={onSubmit}>
                 <input
                     className="py-4 px-6 text-gray-700 border-2 border-black"
