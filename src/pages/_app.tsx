@@ -3,20 +3,53 @@ import { useState } from 'react';
 import CartModal from '../components/CartModal';
 import TopBar from '../components/TopBar';
 import SearchBox from '../components/SearchBox';
-import { Cart, CartProduct } from '../types';
+import { Cart, CartProduct, Product } from '../types';
 
 type Props = AppProps & { cart: Cart };
+
+async function updateCart(
+    { id, price, name }: Product,
+    cartState: Cart,
+    setCartState: (update: (prev: Cart) => Cart) => void,
+) {
+    const res = await fetch(
+        `http://localhost:3000/api/add-to-cart/${id}?userId=${1}`,
+    );
+
+    if (res.ok) {
+        const item = cartState.products[id];
+        if (item) {
+            const updatedProducts = { ...cartState.products };
+
+            updatedProducts[id] = { ...item, quantity: item.quantity + 1 };
+            setCartState((prev) => ({
+                ...prev,
+                products: updatedProducts,
+            }));
+        } else {
+            const updatedProducts = { ...cartState.products };
+            updatedProducts[id] = { id, quantity: 1, price, name };
+            setCartState((prev) => ({
+                ...prev,
+                products: updatedProducts,
+            }));
+        }
+    } else {
+        // TODO: Error handling
+    }
+}
 
 function MyApp({ Component, pageProps, cart }: Props) {
     const [showModal, setShowModal] = useState(false);
     const [cartState, setCartState] = useState(cart);
 
+    async function onAddToCartClick(product: Product) {
+        return updateCart(product, cartState, setCartState);
+    }
+
     const props = {
         ...pageProps,
-        showModal,
-        setShowModal,
-        cartState,
-        setCartState,
+        onAddToCartClick,
     };
 
     return (

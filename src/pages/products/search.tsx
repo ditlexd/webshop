@@ -1,38 +1,32 @@
 import 'tailwindcss/tailwind.css';
 import { GetServerSideProps } from 'next';
-import Link from 'next/link';
-import { useState } from 'react';
 import { Product } from '../../types';
 import ProductCard from '../../components/ProductCard';
-import SearchBox from '../../components/SearchBox';
 
 type Props = {
     products: Product[];
-    pageNo: string;
+    onAddToCartClick: (product: Product) => void;
 };
 
-function HomePage({ products, pageNo }: Props): JSX.Element {
-    const [items, setItems] = useState(products);
-
+function SearchPage({ products, onAddToCartClick }: Props): JSX.Element {
     if (!products.length) {
         return <h1>There were no matches for your search</h1>;
     }
 
     return (
         <>
-            <SearchBox />
             <div
                 id="products"
-                className="grid md:grid-cols-2 sm:grid-cols-1 justify-around gap-x-12 m-20"
+                className="grid md:grid-cols-2 sm:grid-cols-1 justify-around gap-x-12 mb-20 ml-20 mr-20"
             >
-                {items.map((item) => (
-                    <ProductCard item={item} key={item.id} />
+                {products.map((item) => (
+                    <ProductCard
+                        item={item}
+                        key={item.id}
+                        addToCart={onAddToCartClick}
+                    />
                 ))}
             </div>
-            <Link href="/products/2">
-                {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
-                <a>Next</a>
-            </Link>
         </>
     );
 }
@@ -52,7 +46,6 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
         return {
             props: {
                 products,
-                page,
             },
         };
     } catch (err) {
@@ -61,4 +54,4 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     }
 };
 
-export default HomePage;
+export default SearchPage;
