@@ -5,16 +5,25 @@ import {
     GetStaticPropsResult,
 } from 'next';
 import ProductCard from '../../components/ProductCard';
-import { Product } from '../../types';
+import { Cart, Product } from '../../types';
 import SearchBox from '../../components/SearchBox';
 
 type Props = {
     products: Product[];
+    cart: Cart;
 };
 
-function HomePage({ products }: Props): JSX.Element {
+function HomePage({ products, cart }: Props): JSX.Element {
     return (
         <div className="flex flex-col">
+            <div className="flex flex-row-reverse h-14 bg-blue-200">
+                <button
+                    type="button"
+                    className="w-20 border-2 border-gray-500 rounded bg-pink-200"
+                >
+                    <p className="ml-4 mr-4">Cart ({cart.products.length})</p>
+                </button>
+            </div>
             <SearchBox />
             <div
                 id="products"
@@ -47,6 +56,7 @@ export const getStaticProps: GetStaticProps = async ({
     return {
         props: {
             products,
+            cart: { id: 1, products: [] },
         },
         revalidate: 100,
     };
