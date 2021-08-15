@@ -21,7 +21,7 @@ describe('Display page', () => {
         expect(screen.getByText('Cart (0)')).toBeInTheDocument();
     });
 
-    test('Should add item to cart if "add to bag" is clicked', async () => {
+    test('Should add item to cart if "add to cart" is clicked', async () => {
         global.fetch = jest.fn(() =>
             Promise.resolve({
                 ok: true,
@@ -50,7 +50,7 @@ describe('Display page', () => {
         );
 
         expect(screen.getByText('Cart (0)')).toBeInTheDocument();
-        fireEvent.click(screen.getByText('Add to bag'));
+        fireEvent.click(screen.getByText('Add to cart'));
         await waitFor(() => {
             expect(screen.getByText('Cart (1)')).toBeInTheDocument();
         });
@@ -119,7 +119,7 @@ describe('Search page page', () => {
         expect(screen.getByText('Cart (0)')).toBeInTheDocument();
     });
 
-    test('Should add item to cart if "add to bag" is clicked', async () => {
+    test('Should add item to cart if "add to cart" is clicked', async () => {
         global.fetch = jest.fn(() =>
             Promise.resolve({
                 ok: true,
@@ -148,7 +148,7 @@ describe('Search page page', () => {
         );
 
         expect(screen.getByText('Cart (0)')).toBeInTheDocument();
-        fireEvent.click(screen.getByText('Add to bag'));
+        fireEvent.click(screen.getByText('Add to cart'));
         await waitFor(() => {
             expect(screen.getByText('Cart (1)')).toBeInTheDocument();
         });

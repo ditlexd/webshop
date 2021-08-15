@@ -12,7 +12,7 @@ export default function ProductCard({ item, addToCart }: Props): JSX.Element {
                     className="absolute inset-0 w-full h-full object-cover"
                 />
             </div>
-            <form className="flex-auto p-6" onSubmit={() => alert('SUBMITTED')}>
+            <form className="flex-auto p-6" onSubmit={() => addToCart(item)}>
                 <div className="flex flex-wrap">
                     <h1 className="flex-auto text-xl font-semibold">
                         {item.name}
@@ -30,29 +30,9 @@ export default function ProductCard({ item, addToCart }: Props): JSX.Element {
                             className="w-1/2 flex items-center justify-center rounded-md bg-black text-white"
                             type="submit"
                         >
-                            Buy
-                        </button>
-                        <button
-                            className="w-1/2 flex items-center justify-center rounded-md border border-gray-300"
-                            type="button"
-                            onClick={() => addToCart(item)}
-                        >
-                            Add to bag
+                            Add to cart
                         </button>
                     </div>
-                    <button
-                        className="flex-none flex items-center justify-center w-9 h-9 rounded-md text-gray-400 border border-gray-300"
-                        type="button"
-                        aria-label="like"
-                    >
-                        <svg width="20" height="20" fill="currentColor">
-                            <path
-                                fillRule="evenodd"
-                                clipRule="evenodd"
-                                d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z"
-                            />
-                        </svg>
-                    </button>
                 </div>
             </form>
         </div>
