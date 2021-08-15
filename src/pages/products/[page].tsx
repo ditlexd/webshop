@@ -1,5 +1,6 @@
 import 'tailwindcss/tailwind.css';
 import { GetServerSideProps, GetServerSidePropsResult } from 'next';
+import { useState } from 'react';
 import ProductCard from '../../components/ProductCard';
 import { Cart, Product } from '../../types';
 import SearchBox from '../../components/SearchBox';
@@ -10,6 +11,15 @@ type Props = {
 };
 
 function HomePage({ products, cart }: Props): JSX.Element {
+    const [cartState, setCartState] = useState(cart);
+
+    function onAddToCartClick({ id }: Product) {
+        setCartState({
+            ...cartState,
+            products: [...cartState.products, { id, quantity: 1 }],
+        });
+    }
+
     return (
         <div className="flex flex-col">
             <div className="flex flex-row-reverse h-14 bg-blue-200">
@@ -17,7 +27,9 @@ function HomePage({ products, cart }: Props): JSX.Element {
                     type="button"
                     className="w-20 border-2 border-gray-500 rounded bg-pink-200"
                 >
-                    <p className="ml-4 mr-4">Cart ({cart.products.length})</p>
+                    <p className="ml-4 mr-4">
+                        Cart ({cartState.products.length})
+                    </p>
                 </button>
             </div>
             <SearchBox />
@@ -26,7 +38,11 @@ function HomePage({ products, cart }: Props): JSX.Element {
                 className="grid md:grid-cols-2 sm:grid-cols-1 justify-around gap-x-12 mb-20 ml-20 mr-20"
             >
                 {products.map((item) => (
-                    <ProductCard item={item} key={item.id} />
+                    <ProductCard
+                        item={item}
+                        key={item.id}
+                        addToCart={onAddToCartClick}
+                    />
                 ))}
             </div>
         </div>

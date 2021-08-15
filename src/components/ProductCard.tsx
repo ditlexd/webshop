@@ -1,8 +1,8 @@
 import { Product } from '../types';
 
-type Props = { item: Product };
+type Props = { item: Product; addToCart: (product: Product) => void };
 
-export default function ProductCard({ item }: Props): JSX.Element {
+export default function ProductCard({ item, addToCart }: Props): JSX.Element {
     return (
         <div className="flex mt-10 border-4 border-yellow-800">
             <div role="tab" className="flex-none w-48 relative border-2">
@@ -35,7 +35,7 @@ export default function ProductCard({ item }: Props): JSX.Element {
                         <button
                             className="w-1/2 flex items-center justify-center rounded-md border border-gray-300"
                             type="button"
-                            onClick={() => alert('Added to bag')}
+                            onClick={() => addToCart(item)}
                         >
                             Add to bag
                         </button>
