@@ -1,7 +1,7 @@
 import { useRouter } from 'next/router';
 import { useState } from 'react';
 
-const SearchBox = () => {
+const SearchBox = (): JSX.Element => {
     const [searchQuery, setSearchQuery] = useState('');
     const router = useRouter();
 
