@@ -31,7 +31,7 @@ test('Should add item to cart if "add to bag" is clicked', async () => {
                     discount: 0,
                 },
             ]}
-            cart={{ id: 1, products: [] }}
+            cart={{ id: 1, products: {} }}
         />,
     );
 
@@ -39,5 +39,48 @@ test('Should add item to cart if "add to bag" is clicked', async () => {
     fireEvent.click(screen.getByText('Add to bag'));
     await waitFor(() => {
         expect(screen.getByText('Cart (1)')).toBeInTheDocument();
+    });
+});
+
+test('Should display cart if cart modal is clicked', async () => {
+    global.fetch = jest.fn(() =>
+        Promise.resolve({
+            ok: true,
+        }),
+    );
+
+    render(
+        <HomePage
+            products={[
+                {
+                    id: 1,
+                    name: 'Product',
+                    description: 'Description',
+                    defaultImage: '',
+                    images: [],
+                    price: 1234,
+                    discount: 0,
+                },
+            ]}
+            cart={{
+                id: 1,
+                products: {
+                    1: {
+                        id: 1,
+                        name: 'Product',
+                        description: 'Description',
+                        price: 1234,
+                        quantity: 1,
+                    },
+                },
+            }}
+        />,
+    );
+
+    expect(screen.getByText('Cart (1)')).toBeInTheDocument();
+    fireEvent.click(screen.getByText('Cart (1)'));
+
+    await waitFor(() => {
+        expect(screen.getByText('Items in cart')).toBeInTheDocument();
     });
 });

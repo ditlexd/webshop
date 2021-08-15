@@ -33,10 +33,14 @@ export type User = {
     role: 'ADMIN' | 'CUSTOMER'; // Role is based on i % 2
 };
 
+export type CartProduct = {
+    id: number;
+    quantity: number;
+    name: string;
+    price: number;
+};
+
 export type Cart = {
     id: number; // User id
-    products: {
-        id: number;
-        quantity: number;
-    }[];
+    products: Record<number, CartProduct>;
 };
