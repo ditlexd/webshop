@@ -2,7 +2,7 @@
  * @jest-environment jsdom
  */
 
-import { fireEvent, render, screen } from '@testing-library/react';
+import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import HomePage from '../pages/products/[page]';
 
 test('Should display a button to open cart', () => {
@@ -11,7 +11,13 @@ test('Should display a button to open cart', () => {
     expect(screen.getByText('Cart (0)')).toBeInTheDocument();
 });
 
-test('Should add item to cart if "add to bag" is clicked', () => {
+test('Should add item to cart if "add to bag" is clicked', async () => {
+    global.fetch = jest.fn(() =>
+        Promise.resolve({
+            ok: true,
+        }),
+    );
+
     render(
         <HomePage
             products={[
@@ -31,5 +37,7 @@ test('Should add item to cart if "add to bag" is clicked', () => {
 
     expect(screen.getByText('Cart (0)')).toBeInTheDocument();
     fireEvent.click(screen.getByText('Add to bag'));
-    expect(screen.getByText('Cart (1)')).toBeInTheDocument();
+    await waitFor(() => {
+        expect(screen.getByText('Cart (1)')).toBeInTheDocument();
+    });
 });

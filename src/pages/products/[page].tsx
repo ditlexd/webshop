@@ -13,11 +13,19 @@ type Props = {
 function HomePage({ products, cart }: Props): JSX.Element {
     const [cartState, setCartState] = useState(cart);
 
-    function onAddToCartClick({ id }: Product) {
-        setCartState({
-            ...cartState,
-            products: [...cartState.products, { id, quantity: 1 }],
-        });
+    async function onAddToCartClick({ id }: Product) {
+        const res = await fetch(
+            `http://localhost:3000/api/add-to-cart/${id}?userId=${1}`,
+        );
+
+        if (res.ok) {
+            setCartState({
+                ...cartState,
+                products: [...cartState.products, { id, quantity: 1 }],
+            });
+        } else {
+            // TODO: Error handling
+        }
     }
 
     return (
