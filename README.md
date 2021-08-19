@@ -5,6 +5,15 @@ It is implemented using TypeScript, Nextjs, tailwindcss and supporting linters, 
 
 One bugfix that was found during review has been pushed.
 
+To run: 
+```
+npm install
+npm run server
+npm run dev
+```
+
+Now visit `http://localhost:3000/products/1` 
+
 
 # Starter pack for assessment
 
