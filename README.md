@@ -1,3 +1,11 @@
+# Ditlefs notes
+
+This repo implements the following task done over a weekend. 
+It is implemented using TypeScript, Nextjs, tailwindcss and supporting linters, prettier etc. 
+
+One bugfix that was found during review has been pushed.
+
+
 # Starter pack for assessment
 
 ## Description
