@@ -12,7 +12,13 @@ export default function ProductCard({ item, addToCart }: Props): JSX.Element {
                     className="absolute inset-0 w-full h-full object-cover"
                 />
             </div>
-            <form className="flex-auto p-6" onSubmit={() => addToCart(item)}>
+            <form
+                className="flex-auto p-6"
+                onSubmit={(e) => {
+                    e.preventDefault();
+                    addToCart(item);
+                }}
+            >
                 <div className="flex flex-wrap">
                     <h1 className="flex-auto text-xl font-semibold">
                         {item.name}

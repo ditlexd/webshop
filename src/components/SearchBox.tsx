@@ -14,7 +14,12 @@ const SearchBox = (): JSX.Element => {
 
     return (
         <div className="ml-20 mt-10">
-            <form onSubmit={onSubmit}>
+            <form
+                onSubmit={(e) => {
+                    e.preventDefault();
+                    onSubmit();
+                }}
+            >
                 <input
                     className="py-4 px-6 text-gray-700 border-2 border-black"
                     id="search"
