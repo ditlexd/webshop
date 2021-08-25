@@ -1,6 +1,6 @@
 # Ditlefs notes
 
-This repo implements the following task done over a weekend. 
+This repo implements the following task done over a weekend. It took about 7ish hours in total. 
 It is implemented using TypeScript, Nextjs, tailwindcss and supporting linters, prettier etc. 
 
 One bugfix that was found during review has been pushed.
